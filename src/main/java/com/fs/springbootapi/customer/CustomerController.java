@@ -1,14 +1,13 @@
 package com.fs.springbootapi.customer;
 
 import jakarta.annotation.PostConstruct;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("api/v1/customers")
 public class CustomerController {
 
     final private CustomerService customerService;
@@ -24,13 +23,18 @@ public class CustomerController {
         demoDataService.insertDemoData();
     }
 
-    @GetMapping("api/v1/customers")
+    @GetMapping
     public List<Customer> getAllCustomers(){
         return customerService.getAllCustomers();
     }
 
-    @GetMapping("api/v1/customer/{customerId}")
+    @GetMapping("{customerId}")
     public Optional<Customer> getCustomerById(@PathVariable("customerId") Integer customerId){
         return customerService.getCustomerById(customerId);
+    }
+
+    @PostMapping
+    public void insertCustomer(@RequestBody CustomerRegistrationRequest customerRegistrationRequest){
+        customerService.insertCustomer(customerRegistrationRequest);
     }
 }

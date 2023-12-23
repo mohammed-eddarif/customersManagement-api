@@ -1,5 +1,6 @@
 package com.fs.springbootapi.customer;
 
+import com.fs.springbootapi.exception.DuplicateResourceException;
 import com.fs.springbootapi.exception.ResourceNotFound;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +24,19 @@ public class CustomerService {
     public Optional<Customer> getCustomerById(Integer customerId) {
         return Optional.ofNullable(customerRepository.findById(customerId)
                 .orElseThrow(() -> new ResourceNotFound("customer with id [%s] not found".formatted(customerId))));
+    }
+
+    public void insertCustomer(CustomerRegistrationRequest customerRegitrationRequest) {
+
+        // check if customer already exist
+       // boolean b = customerRepository.findAll().stream().anyMatch(customer1 -> customer1.equals(customerRegitrationRequest.email()));
+        if (customerRepository.existsCustomerByEmail(customerRegitrationRequest.email())){
+            throw new DuplicateResourceException("email already taken");
+        }
+        // add
+        Customer customer = new Customer(customerRegitrationRequest.name(),
+                customerRegitrationRequest.email(),
+                customerRegitrationRequest.age());
+        customerRepository.save(customer);
     }
 }

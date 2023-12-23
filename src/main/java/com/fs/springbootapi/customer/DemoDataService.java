@@ -16,9 +16,9 @@ public class DemoDataService {
 
     @Transactional
     public void insertDemoData() {
-        Customer customer1 = new Customer(1, "med", "edd", 23);
-        Customer customer2 = new Customer(2, "sanae", "daoudi", 25);
-        Customer customer3 = new Customer(3, "ayoub", "laghbissi", 26);
+        Customer customer1 = new Customer("med", "edd", 23);
+        Customer customer2 = new Customer("sanae", "daoudi", 25);
+        Customer customer3 = new Customer("ayoub", "laghbissi", 26);
 
         List<Customer> customers = List.of(customer1, customer2, customer3);
 
