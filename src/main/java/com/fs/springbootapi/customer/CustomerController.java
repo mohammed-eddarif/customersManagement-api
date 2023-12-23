@@ -37,4 +37,8 @@ public class CustomerController {
     public void insertCustomer(@RequestBody CustomerRegistrationRequest customerRegistrationRequest){
         customerService.insertCustomer(customerRegistrationRequest);
     }
+    @DeleteMapping("{customerId}")
+    public void deleteCustomerById(@PathVariable("customerId") Integer customerId){
+        customerService.deleteCustomerById(customerId);
+    }
 }

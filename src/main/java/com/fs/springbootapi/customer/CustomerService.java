@@ -39,4 +39,11 @@ public class CustomerService {
                 customerRegitrationRequest.age());
         customerRepository.save(customer);
     }
+
+    public void deleteCustomerById(Integer customerId) {
+        if(!customerRepository.existsById(customerId)){
+            throw new ResourceNotFound("customer with id [%s] not found");
+        }
+        customerRepository.deleteById(customerId);
+    }
 }
