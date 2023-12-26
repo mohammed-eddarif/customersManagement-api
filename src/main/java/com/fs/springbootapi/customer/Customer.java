@@ -1,6 +1,5 @@
 package com.fs.springbootapi.customer;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,11 +11,21 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @Entity
+//@Table(
+//        name = "customer",
+//        uniqueConstraints = {
+//                @UniqueConstraint(
+//                        name = "customer_email_unique",
+//                        columnNames = "email"
+//                )
+//        }
+//)
 public class Customer {
     @Id
     @SequenceGenerator(
             name = "customer_id_sequence",
             sequenceName = "customer_id_sequence"
+            //allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
