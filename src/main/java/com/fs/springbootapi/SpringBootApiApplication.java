@@ -7,6 +7,7 @@ import com.github.javafaker.Name;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +15,7 @@ import java.util.Random;
 
 
 @SpringBootApplication
-@RestController
+@EntityScan(basePackages = "com.fs.springbootapi.customer")
 public class SpringBootApiApplication {
 
 	public static void main(String[] args) {
