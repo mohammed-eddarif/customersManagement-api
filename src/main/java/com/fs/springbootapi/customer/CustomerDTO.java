@@ -6,8 +6,9 @@ public record CustomerDTO(
         Integer id,
         String name,
         String email,
-        Gender gender,
-        Integer age
+        Integer age,
+
+        Gender gender
 ) {
 
 }
