@@ -11,15 +11,15 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @Entity
-@Table(
-        name = "customer",
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        name = "customer_email_unique",
-                        columnNames = "email"
-                )
-        }
-)
+//@Table(
+//        name = "customer",
+//        uniqueConstraints = {
+//                @UniqueConstraint(
+//                        name = "customer_email_unique",
+//                        columnNames = "email"
+//                )
+//        }
+//)
 public class Customer {
     @Id
     @SequenceGenerator(
@@ -37,17 +37,27 @@ public class Customer {
     )
     private String name;
     @Column(
-            nullable = false
+            nullable = false,
+            unique = true
     )
     private String email;
     @Column(
             nullable = false
     )
     private Integer age;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
-    public Customer(String name, String email, Integer age) {
+    @Column(
+            nullable = false
+    )
+    private String password;
+
+    public Customer(String name, String email, Integer age, Gender gender, String password) {
         this.name = name;
         this.email = email;
         this.age = age;
+        this.gender = gender;
+        this.password = password;
     }
 }

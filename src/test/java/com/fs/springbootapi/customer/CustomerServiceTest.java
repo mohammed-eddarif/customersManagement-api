@@ -1,6 +1,7 @@
 package com.fs.springbootapi.customer;
 
 import com.fs.springbootapi.exception.DuplicateResourceException;
+import com.fs.springbootapi.exception.RequestValidationException;
 import com.fs.springbootapi.exception.ResourceNotFound;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,7 +37,7 @@ class CustomerServiceTest {
     @Test
     void getCustomerById() {
         int id = 1;
-        Customer customer = new Customer(id, "med", "edd", 23);
+        Customer customer = new Customer(id, "med", "edd", 23, Gender.MALE, "123");
         when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
 
         Customer actual = underTest.getCustomerById(id);
@@ -68,7 +68,7 @@ class CustomerServiceTest {
 
         when(customerRepository.existsCustomerByEmail(email)).thenReturn(false);
 
-        CustomerRegistrationRequest request = new CustomerRegistrationRequest("med", email,  19);
+        CustomerRegistrationRequest request = new CustomerRegistrationRequest("med", email,  19, Gender.MALE, "123");
 
 
         // When
@@ -93,7 +93,7 @@ class CustomerServiceTest {
 
         when(customerRepository.existsCustomerByEmail(email)).thenReturn(true);
 
-        CustomerRegistrationRequest request = new CustomerRegistrationRequest("med", email, 19);
+        CustomerRegistrationRequest request = new CustomerRegistrationRequest("med", email, 19, Gender.MALE, "123");
 
         // When
         assertThatThrownBy(() -> underTest.insertCustomer(request)).isInstanceOf(DuplicateResourceException.class).hasMessage("email already taken");
@@ -136,7 +136,7 @@ class CustomerServiceTest {
     void canUpdateAllCustomersProperties() {
         // Given
         int id = 1;
-        Customer customer = new Customer(id, "med", "edd", 19);
+        Customer customer = new Customer(id, "med", "edd", 19, Gender.MALE, "123");
         when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
 
         String newEmail = "med@gmail.com";
@@ -163,7 +163,7 @@ class CustomerServiceTest {
     void canUpdateOnlyCustomerName() {
         // Given
         int id = 1;
-        Customer customer = new Customer(id, "med", "edd", 23);
+        Customer customer = new Customer(id, "med", "edd", 23, Gender.MALE, "123");
         when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest("Alexandro", null, null);
@@ -186,7 +186,7 @@ class CustomerServiceTest {
     void canUpdateOnlyCustomerEmail() {
         // Given
         int id = 1;
-        Customer customer = new Customer(id, "med", "edd", 23);
+        Customer customer = new Customer(id, "med", "edd", 23, Gender.MALE, "123");
         when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
 
         String newEmail = "alexandro@amigoscode.com";
@@ -213,7 +213,7 @@ class CustomerServiceTest {
     void canUpdateOnlyCustomerAge() {
         // Given
         int id = 1;
-        Customer customer = new Customer(id, "med", "edd", 23);
+        Customer customer = new Customer(id, "med", "edd", 23, Gender.MALE, "123");
         when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(null, null, 22);
@@ -236,7 +236,7 @@ class CustomerServiceTest {
     void willThrowWhenTryingToUpdateCustomerEmailWhenAlreadyTaken() {
         // Given
         int id = 1;
-        Customer customer = new Customer(id, "med", "edd", 23);
+        Customer customer = new Customer(id, "med", "edd", 23, Gender.MALE, "123");
         when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
 
         String newEmail = "alexandro@amigoscode.com";
@@ -256,7 +256,7 @@ class CustomerServiceTest {
     void willThrowWhenCustomerUpdateHasNoChanges() {
         // Given
         int id = 1;
-        Customer customer = new Customer(id, "med", "edd", 23);
+        Customer customer = new Customer(id, "med", "edd", 23, Gender.MALE, "123");
         when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(customer.getName(), customer.getEmail(), customer.getAge());
@@ -268,10 +268,4 @@ class CustomerServiceTest {
         verify(customerRepository, never()).save(any());
     }
 
-
-
-
-    @Test
-    void editCustomerById() {
-    }
 }

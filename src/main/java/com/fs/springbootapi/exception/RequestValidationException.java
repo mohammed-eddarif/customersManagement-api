@@ -1,4 +1,4 @@
-package com.fs.springbootapi.customer;
+package com.fs.springbootapi.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

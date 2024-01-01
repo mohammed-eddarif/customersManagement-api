@@ -2,6 +2,7 @@ package com.fs.springbootapi;
 
 import com.fs.springbootapi.customer.Customer;
 import com.fs.springbootapi.customer.CustomerRepository;
+import com.fs.springbootapi.customer.Gender;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
 import org.springframework.boot.CommandLineRunner;
@@ -31,11 +32,14 @@ public class SpringBootApiApplication {
 			String firstName = name.firstName();
 			String lastName = name.lastName();
 			int age = random.nextInt(16, 99);
+			Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 			String email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@gmail.com";
 			Customer customer = new Customer(
 					firstName +  " " + lastName,
 					email,
-					age
+					age,
+					gender,
+					"123"
 			);
 			customerRepository.save(customer);
 			System.out.println(email);

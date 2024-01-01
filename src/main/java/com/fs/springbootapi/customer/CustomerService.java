@@ -1,11 +1,11 @@
 package com.fs.springbootapi.customer;
 
 import com.fs.springbootapi.exception.DuplicateResourceException;
+import com.fs.springbootapi.exception.RequestValidationException;
 import com.fs.springbootapi.exception.ResourceNotFound;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -36,7 +36,9 @@ public class CustomerService {
         // add
         Customer customer = new Customer(customerRegitrationRequest.name(),
                 customerRegitrationRequest.email(),
-                customerRegitrationRequest.age());
+                customerRegitrationRequest.age(),
+                customerRegitrationRequest.gender(),
+                customerRegitrationRequest.password());
         customerRepository.save(customer);
     }
 

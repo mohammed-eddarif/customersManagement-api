@@ -40,7 +40,9 @@ class CustomerRepositoryTest /*extends AbstractTestcontainers*/{
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 email,
-                20
+                20,
+                Gender.MALE,
+                "123"
                 );
 
         underTest.save(customer);
